@@ -21,6 +21,7 @@ class EpicVisualizerV2 {
     this.audioFileName = document.getElementById('audio-file-name');
     this.imageFileCount = document.getElementById('image-file-count');
     this.timestampConfig = document.getElementById('timestamp-config');
+    this.autoTimestampBtn = document.getElementById('auto-timestamp-btn'); // Added for auto-timestamp generation
     this.launchBtn = document.getElementById('launch-btn');
     this.validationMessage = document.getElementById('validation-message');
 
@@ -48,6 +49,7 @@ class EpicVisualizerV2 {
     // Setup Screen Listeners
     this.audioUpload.addEventListener('change', this.handleAudioUpload.bind(this));
     this.imageUpload.addEventListener('change', this.handleImageUpload.bind(this));
+    this.autoTimestampBtn.addEventListener('click', this.autoGenerateTimestamps.bind(this)); // Added for auto-timestamp generation
     this.launchBtn.addEventListener('click', this.launchVisualizer.bind(this));
 
     // Visualizer Screen Listeners
@@ -124,6 +126,58 @@ class EpicVisualizerV2 {
       if (!audioReady) this.validationMessage.textContent = 'Please select an audio file.';
       else if (!imagesReady) this.validationMessage.textContent = 'Please select at least one image file.';
     }
+  }
+
+  autoGenerateTimestamps() {
+    if (!this.config.audioFile || !this.audio.duration) {
+      alert('Please upload an audio file first to determine its duration.');
+      return;
+    }
+    if (this.config.lyrics.length === 0) {
+      alert('Please upload images first.');
+      return;
+    }
+
+    const audioDuration = this.audio.duration;
+    const numberOfImages = this.config.lyrics.length;
+
+    if (numberOfImages === 0) return; // Should be caught by above check, but good practice
+
+    const stepDuration = audioDuration / numberOfImages;
+
+    // First, update the time property in the config
+    this.config.lyrics.forEach((lyric, index) => {
+      lyric.time = index * stepDuration;
+    });
+
+    // Then, update the UI input fields
+    // The lyrics array might be sorted differently than the UI elements if timestamps were previously edited.
+    // It's safer to update UI inputs based on their data-index, assuming this.config.lyrics
+    // is kept in the original upload order (or sorted alphabetically) until just before launch.
+    // Let's re-fetch the inputs and update them.
+    // The `handleImageUpload` sorts files alphabetically and creates lyrics and inputs in that order.
+    // So, this.config.lyrics should match the order of inputs if not manually sorted yet by time.
+
+    const timestampInputs = this.timestampConfig.querySelectorAll('.timestamp-input');
+
+    // Assuming this.config.lyrics is currently sorted as it was upon image upload (e.g., alphabetically)
+    // which matches the order of `timestampInputs` creation.
+    // If `this.config.lyrics` could have been pre-sorted by time by another operation before this,
+    // this direct loop might be problematic. However, `launchVisualizer` is the main place it's sorted by time.
+    // For safety, let's assume `this.config.lyrics` is in the order that inputs were created.
+    // (Alphabetical sort from `handleImageUpload`)
+
+    this.config.lyrics.forEach((lyric, index) => {
+      const inputElement = this.timestampConfig.querySelector(`.timestamp-input[data-index="${index}"]`);
+      if (inputElement) {
+        // Format to a reasonable number of decimal places, e.g., 1 or 2
+        inputElement.value = lyric.time.toFixed(1);
+      }
+    });
+
+    // Optional: Provide feedback to the user
+    // console.log('Timestamps auto-generated:', this.config.lyrics);
+    alert('Timestamps have been auto-generated based on audio duration and number of images.');
   }
 
   // --- TRANSITION & LAUNCH LOGIC ---
