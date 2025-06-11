@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Epic Tech AI - Lyric Visualizer (v2.1)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
 
+  <!-- ===== SETUP SCREEN ===== -->
+  <div id="setup-screen" class="screen active">
+    <div class="setup-container">
+      <div class="setup-header">
+        <h1>EPIC TECH AI VISUALIZER</h1>
+        <p>Create your own immersive audio-visual experience.</p>
+      </div>
+
+      <!-- Step 1: Upload Audio -->
+      <div class="setup-step">
+        <h2>Step 1: Upload Your Audio Track</h2>
+        <label for="audio-upload" class="file-label">
+          <span class="file-icon">🎵</span>
+          <span id="audio-file-name">Click to Select MP3 File</span>
+        </label>
+        <input type="file" id="audio-upload" accept="audio/mpeg" required />
+      </div>
+
+      <!-- Step 2: Upload Lyric Images -->
+      <div class="setup-step">
+        <h2>Step 2: Upload Your Lyric Images</h2>
+        <label for="image-upload" class="file-label">
+          <span class="file-icon">🖼️</span>
+          <span id="image-file-count">Click to Select All Image Files</span>
+        </label>
+        <input type="file" id="image-upload" accept="image/*" multiple required />
+      </div>
+
+      <!-- Step 3: Configure Timestamps -->
+      <div class="setup-step">
+        <h2>Step 3: Configure Timestamps</h2>
+        <div id="timestamp-config" class="timestamp-container">
+          <p class="placeholder-text">Upload images to configure timings.</p>
+        </div>
+      </div>
+
+      <!-- Step 4: Launch -->
+      <div class="setup-step">
+        <button id="launch-btn" disabled>
+          <span class="launch-icon">🚀</span>
+          Launch Visualizer
+        </button>
+        <p id="validation-message" class="error-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VISUALIZER SCREEN ===== -->
+  <div id="visualizer-screen" class="screen">
+    <canvas id="particle-canvas"></canvas>
+    <video autoplay muted loop id="background-video" playsinline></video>
+
+    <div id="audio-controls">
+      <button id="play-pause-btn" class="control-btn">
+        <span class="play-icon">▶</span>
+        <span class="pause-icon">⏸</span>
+      </button>
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="time-display">
+          <span id="current-time">0:00</span>
+          <span id="duration">0:00</span>
+        </div>
+      </div>
+      <button id="volume-btn" class="control-btn">🔊</button>
+      <button id="exit-btn" class="control-btn">✕</button>
+    </div>
+
+    <audio id="audio" preload="auto"></audio>
+
+    <div id="visualizer">
+      <div class="lyric-container">
+        <img id="lyric-slide" alt="Lyric Visualization" />
+        <div class="lyric-overlay">
+          <div class="pulse-effect"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
