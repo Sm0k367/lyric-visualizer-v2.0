@@ -1,4 +1,4 @@
-// ===== Epic Visualizer v3.0 Script =====
+// ===== CSLE v3.0 Engine =====
 
 class EpicVisualizer {
   constructor() {
@@ -54,11 +54,9 @@ class EpicVisualizer {
   }
 
   launchVisualizer() {
-    // Load audio
     this.audio.src = URL.createObjectURL(this.audioFile);
     this.audio.load();
 
-    // When metadata is ready, start slideshow
     this.audio.onloadedmetadata = () => {
       const totalDuration = this.audio.duration;
       const totalImages = this.imageUrls.length;
@@ -66,7 +64,6 @@ class EpicVisualizer {
       this.startSlideshow();
     };
 
-    // Show visualizer screen
     document.getElementById('setup-screen').classList.remove('active');
     document.getElementById('visualizer-screen').classList.add('active');
   }
@@ -93,7 +90,6 @@ class EpicVisualizer {
     this.slide.classList.remove('fade-left', 'fade-right');
     this.slide.src = this.imageUrls[index];
 
-    // Alternate fade direction
     const direction = index % 2 === 0 ? 'fade-left' : 'fade-right';
     setTimeout(() => {
       this.slide.classList.add(direction);
