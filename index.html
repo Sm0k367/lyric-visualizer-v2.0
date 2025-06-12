@@ -3,41 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Epic Visualizer v3.0</title>
+  <title>CSLE v3.0 – Chrono-Synesthetic Lyric Engine</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- ===== SETUP SCREEN ===== -->
+  <!-- SETUP SCREEN -->
   <div id="setup-screen" class="screen active">
     <div class="setup-container">
-      <h1>🎵 Epic Visualizer v3.0</h1>
-      <p>Upload your MP3 and images. We’ll do the rest.</p>
+      <h1>🎶 Chrono-Synesthetic Lyric Engine</h1>
+      <p>Upload your audio and images. The cosmos will do the rest.</p>
 
-      <div class="setup-step">
-        <label for="audio-upload" class="file-label">Upload MP3</label>
+      <label class="file-label">
+        Upload MP3
         <input type="file" id="audio-upload" accept="audio/mpeg" />
-        <span id="audio-file-name" class="file-name">No file selected</span>
-      </div>
+      </label>
+      <span id="audio-file-name" class="file-info">No file selected</span>
 
-      <div class="setup-step">
-        <label for="image-upload" class="file-label">Upload Images</label>
+      <label class="file-label">
+        Upload Images
         <input type="file" id="image-upload" accept="image/*" multiple />
-        <span id="image-file-count" class="file-name">0 images</span>
-      </div>
+      </label>
+      <span id="image-file-count" class="file-info">0 images</span>
 
-      <button id="launch-btn" disabled>🚀 Launch Visualizer</button>
+      <button id="launch-btn" disabled>🚀 Launch CSLE</button>
     </div>
   </div>
 
-  <!-- ===== VISUALIZER SCREEN ===== -->
+  <!-- VISUALIZER SCREEN -->
   <div id="visualizer-screen" class="screen">
     <canvas id="background-canvas"></canvas>
     <audio id="audio" preload="auto"></audio>
 
     <div id="slideshow">
-      <img id="slide" src="" alt="Slideshow Image" />
+      <img id="slide" src="" alt="Visualized Lyric" />
     </div>
 
     <div id="controls">
@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- FOOTER -->
   <footer id="footer">
     <p>Built by <strong>Epic Tech AI</strong> — 
       <a href="https://x.com/EpicTechAI" target="_blank">@EpicTechAI</a> | 
